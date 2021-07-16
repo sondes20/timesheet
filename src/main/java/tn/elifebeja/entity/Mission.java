@@ -24,6 +24,7 @@ public class Mission implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
+	private double salaire;
 	private String description;
 	@ManyToOne
 	private Departement departement;
@@ -66,6 +67,18 @@ public class Mission implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+	@Override
+	public String toString() {
+		return "Mission [id=" + id + ", name=" + name + ", salaire=" + salaire + ", description=" + description
+				+ ", departement=" + departement + ", timesheets=" + timesheets + "]";
+	}
+
+	public double getSalaire() {
+		return salaire;
+	}
+
+	public void setSalaire(double salaire) {
+		this.salaire = salaire;
+	}
 	
 }

@@ -33,6 +33,7 @@ public class Mission implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	//utilisation du git
 	
 	public String getName() {
 		return name;

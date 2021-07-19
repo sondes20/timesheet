@@ -10,17 +10,16 @@ public interface IEmployeeService {
 	
 	public long ajouterEmployee (Employee employe);
 	public void affecterEmployeADepartement (long employeeId , long depId);
-	public int ajouterContrat (Contrat contrat);
+	public long ajouterContrat (Contrat contrat);
 	public void affecterContratAEmploye (long contratId , long employeId);
-	public String getEmployePrenomById (int employeId);
+	public String getEmployePrenomById (long employeId);
 	public long getNombreEmployeJPQL();
 	public List<String> getAllEmployeNamesJPQL();
-	public int ajouterEmploye(Employee employee);
 	public List<Employee> listemploye ();
 	public void affecterEmployeDepartement(Employee user, Departement dep);
-	public List<Employee> getAllEmployeeByEntreprise (int identr);
+	public List<Employee> getAllEmployeeByEntreprise (long identr);
 	public Employee getEmploye(String nom, String pwd);
-	public void mettreAjourEmailByEmployeId(String email, int employeId);
+	public void mettreAjourEmailByEmployeId(String email, long employeId);
 	
 
 }

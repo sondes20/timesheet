@@ -1,12 +1,14 @@
 package tn.elifebeja.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,8 +33,8 @@ public class Employee implements Serializable{
 	private Role role;
 	@OneToOne
 	private Contrat contrat;
-	@ManyToMany(mappedBy="employees", cascade=CascadeType.ALL)
-	private List<Departement> departements;
+	@ManyToMany(mappedBy="employees", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+	private List<Departement> Departements;
 	@OneToMany(mappedBy="employee")
 	private List<Timesheet> timesheets;
 	public Employee() {
@@ -40,6 +42,15 @@ public class Employee implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Employee(String prenom, String nom, String email, boolean isActif, Role role) {
+		super();
+		this.prenom = prenom;
+		this.nom = nom;
+		this.email = email;
+		this.isActif = isActif;
+		this.role = role;
+	}
+
 	public String getPrenom() {
 		return prenom;
 	}
@@ -76,12 +87,6 @@ public class Employee implements Serializable{
 	public void setContrat(Contrat contrat) {
 		this.contrat = contrat;
 	}
-	public List<Departement> getDepartements() {
-		return departements;
-	}
-	public void setDepartements(List<Departement> departements) {
-		this.departements = departements;
-	}
 	
 	public List<Timesheet> getTimesheets() {
 		return timesheets;
@@ -98,11 +103,17 @@ public class Employee implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", prenom=" + prenom + ", nom=" + nom + ", email=" + email + ", isActif="
-				+ isActif + ", role=" + role + ", contrat=" + contrat + ", departements=" + departements
-				+ ", timesheets=" + timesheets + "]";
+		return "Employee [prenom=" + prenom + ", nom=" + nom + ", email=" + email + ", isActif=" + isActif + ", role="
+				+ role + "]";
 	}
-	
-	
+
+	public List<Departement> getDepartements() {
+		return Departements;
+	}
+
+	public void setDepartements(List<Departement> departements) {
+		Departements = departements;
+	}
+
 
 }

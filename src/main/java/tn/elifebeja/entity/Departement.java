@@ -1,13 +1,17 @@
 package tn.elifebeja.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,21 +26,20 @@ public class Departement implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	@ManyToMany(cascade=CascadeType.ALL)
-	private List<Employee> employees;
-	@OneToMany(mappedBy="departement",cascade=CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Employee> employees=new ArrayList<>();
+	@OneToMany(mappedBy="departement",cascade=CascadeType.PERSIST)
 	private List<Mission> missionsList;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Entreprise entreprise;
 	public Departement() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Departement(long id, String name, List<Employee> employees) {
+	public Departement(long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.employees = employees;
 	}
 	
 	public Departement(String name) {
@@ -53,12 +56,6 @@ public class Departement implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Employee> getEmployees() {
-		return employees;
-	}
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
-	}
 	public List<Mission> getMissionsList() {
 		return missionsList;
 	}
@@ -73,8 +70,17 @@ public class Departement implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Departement [id=" + id + ", name=" + name + ", employees=" + employees + ", missionsList="
-				+ missionsList + ", entreprise=" + entreprise + "]";
+		return "Departement [id=" + id + ", name=" + name + "]";
 	}
+	public List<Employee> getEmployees() {
+		return employees;
+	}
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	
 }

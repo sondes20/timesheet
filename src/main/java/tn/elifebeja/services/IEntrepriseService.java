@@ -11,5 +11,7 @@ public interface IEntrepriseService {
 	public long ajouterDepartement(Departement dep);
 	void affecterDepartementAEntreprise (long depId , long entrepriseId);
 	List<String> getAllDepartementsNamesByEntreprise (long entrepriseId);
+	public Entreprise retrieveEntreprise(long id);
+	public long miseAJourEntreprise(Entreprise e);
 
 }

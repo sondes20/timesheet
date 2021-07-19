@@ -3,7 +3,10 @@ package tn.elifebeja.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -16,7 +19,9 @@ public class Contrat implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	private long reference;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "reference")
+	private long id;
 	@Temporal(TemporalType.DATE)
 	private Date dateDebut;
 	private String typeContrat;
@@ -27,18 +32,17 @@ public class Contrat implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Contrat(long reference, Date dateDebut, String typeContrat, float salaire) {
+	public Contrat(Date dateDebut, String typeContrat, float salaire) {
 		super();
-		this.reference = reference;
 		this.dateDebut = dateDebut;
 		this.typeContrat = typeContrat;
 		this.salaire = salaire;
 	}
 	public long getReference() {
-		return reference;
+		return id;
 	}
 	public void setReference(long reference) {
-		this.reference = reference;
+		this.id = reference;
 	}
 	public Date getDateDebut() {
 		return dateDebut;
@@ -66,7 +70,7 @@ public class Contrat implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Contrat [reference=" + reference + ", dateDebut=" + dateDebut + ", typeContrat=" + typeContrat
+		return "Contrat [reference=" + id + ", dateDebut=" + dateDebut + ", typeContrat=" + typeContrat
 				+ ", salaire=" + salaire + ", employee=" + employee + "]";
 	}
 	

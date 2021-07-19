@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Entreprise implements Serializable{
 	private long id;
 	private String name;
 	private String raisonSocial;
-	@OneToMany(mappedBy="entreprise", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="entreprise", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Departement> departements;
 	public Entreprise() {
 		super();
@@ -63,10 +64,13 @@ public class Entreprise implements Serializable{
 	public void setDepartements(List<Departement> departements) {
 		this.departements = departements;
 	}
+
 	@Override
 	public String toString() {
 		return "Entreprise [id=" + id + ", name=" + name + ", raisonSocial=" + raisonSocial + ", departements="
 				+ departements + "]";
 	}
+
+	
 	
 }

@@ -1,13 +1,12 @@
 package tn.elifebeja.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import tn.elifebeja.TpTimeSheetApplicationTests;
 import tn.elifebeja.entity.Departement;
 import tn.elifebeja.entity.Entreprise;
 import tn.elifebeja.repository.DepartementRepository;
@@ -35,16 +34,28 @@ public class EntrepriseService implements IEntrepriseService {
 	public void affecterDepartementAEntreprise(long depId, long entrepriseId) {
 		// TODO Auto-generated method stub
 		Departement dept = deptRepo.findById(depId).get();
-		for(Entreprise e : entrepriseRepo.findAll())
-		l.info(e);
-		
+		Entreprise entre = entrepriseRepo.findById(entrepriseId).get();
+		List<Departement> listDept = (List<Departement>)deptRepo.findAll();
+		if(listDept.contains(entre)){
+		dept.setEntreprise(entre);
+		deptRepo.save(dept);
+		}else{
+			l.error("Le département existe déja!");
+		}
 		
 	}
 
 	@Override
 	public List<String> getAllDepartementsNamesByEntreprise(long entrepriseId) {
 		// TODO Auto-generated method stub
-		return null;
+		List<String> lnom = new ArrayList<String>();
+		Entreprise entre = entrepriseRepo.findById(entrepriseId).get();
+		List<Departement> deptList = entre.getDepartements();
+		for(Departement d:deptList){
+			lnom.add(d.getName());
+		}
+		
+		return lnom;
 	}
 
 	@Override
@@ -52,6 +63,22 @@ public class EntrepriseService implements IEntrepriseService {
 		// TODO Auto-generated method stub
 		Entreprise e = entrepriseRepo.save(entreprise);
 		return e.getId();
+	}
+
+	public static Logger getL() {
+		return l;
+	}
+
+	@Override
+	public long miseAJourEntreprise(Entreprise e) {
+		// TODO Auto-generated method stub
+		return entrepriseRepo.save(e).getId();
+	}
+
+	@Override
+	public Entreprise retrieveEntreprise(long id) {
+		// TODO Auto-generated method stub
+		return entrepriseRepo.findById(id).get();
 	}
 
 }
